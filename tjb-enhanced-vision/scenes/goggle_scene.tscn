@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://c36d3gjvvfwlo"]
+
+[ext_resource type="PackedScene" uid="uid://bgbhl7kd1rvdb" path="res://models/goggle/night_vision_device.glb" id="1_a04y6"]
+[ext_resource type="Shader" uid="uid://cxtikqkgdn7y2" path="res://shaders/night_vision.gdshader" id="2_1jjos"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_dqkch"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g2els"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_dqkch")
+emission_enabled = true
+emission_texture = SubResource("ViewportTexture_dqkch")
+
+[sub_resource type="QuadMesh" id="QuadMesh_hx3el"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_tuyoq"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qlg0r"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_tuyoq")
+emission_enabled = true
+emission_texture = SubResource("ViewportTexture_tuyoq")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g6t86"]
+shader = ExtResource("2_1jjos")
+shader_parameter/brightness = 1.200000057
+shader_parameter/contrast = 1.2
+shader_parameter/night_vision_color = Color(0.1, 1, 0.2, 1)
+shader_parameter/vignette_strength = 0.0
+shader_parameter/scanline_density = 2.50000011875
+shader_parameter/scanline_intensity = 0.3
+shader_parameter/noise_strength = 0.750000035625
+shader_parameter/grain_size = 6.50000026125
+
+[node name="GoggleScene" type="Node3D" unique_id=79060738]
+
+[node name="Sketchfab_Scene" parent="." unique_id=218054539 instance=ExtResource("1_a04y6")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.0019062907, 0, -0.032894302)
+
+[node name="PreviewLeft" type="MeshInstance3D" parent="." unique_id=1516042240]
+transform = Transform3D(0.030280305, 1.5635319e-16, 3.5527137e-15, -4.7023506e-24, 0.030098358, -4.371138e-08, 1.110223e-16, 1.315641e-09, 0.99999994, -0.033418424, 0.0039782524, 0.013235801)
+material_override = SubResource("StandardMaterial3D_g2els")
+mesh = SubResource("QuadMesh_hx3el")
+
+[node name="PreviewLeft2" type="MeshInstance3D" parent="." unique_id=172789531]
+transform = Transform3D(0.030280305, 1.5635319e-16, 3.5527137e-15, -4.7023506e-24, 0.030098358, -4.371138e-08, 1.110223e-16, 1.315641e-09, 0.99999994, 0.036028538, 0.0039782524, 0.013235805)
+material_override = SubResource("StandardMaterial3D_qlg0r")
+mesh = SubResource("QuadMesh_hx3el")
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="." unique_id=19594171]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0004554987, 0.009565584, -0.13984188)
+remote_path = NodePath("../SubViewport/Camera3D")
+update_scale = false
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1928756463]
+canvas_item_default_texture_filter = 0
+size = Vector2i(180, 180)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport" unique_id=668629095]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0004554987, 0.009565584, -0.13984188)
+top_level = true
+cull_mask = 1048567
+
+[node name="SpotLight3D" type="SpotLight3D" parent="SubViewport/Camera3D" unique_id=665207867]
+light_energy = 5.0
+light_cull_mask = 4
+spot_range = 60.10143
+spot_angle = 44.721992
+
+[node name="CanvasLayer" type="CanvasLayer" parent="SubViewport" unique_id=712398481]
+
+[node name="NightShader" type="ColorRect" parent="SubViewport/CanvasLayer" unique_id=1772048248]
+material = SubResource("ShaderMaterial_g6t86")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[editable path="Sketchfab_Scene"]

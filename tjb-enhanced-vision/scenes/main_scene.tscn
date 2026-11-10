@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://tw2p4nr7tsbx"]
+
+[ext_resource type="PackedScene" uid="uid://d323ep1umukis" path="res://scenes/player.tscn" id="1_w2twt"]
+[ext_resource type="PackedScene" uid="uid://buqtmfqbdftt6" path="res://models/forest/forest.glb" id="2_pw63i"]
+[ext_resource type="Script" path="res://scripts/goggle_mirror.gd" id="3_mirror"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7ykc4"]
+sky_top_color = Color(0.09110289, 0.11733463, 0.15106094, 1)
+sky_horizon_color = Color(0.11425293, 0.11425308, 0.12096799, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Sky" id="Sky_pw63i"]
+sky_material = SubResource("ProceduralSkyMaterial_7ykc4")
+
+[sub_resource type="Environment" id="Environment_7ykc4"]
+background_mode = 1
+sky = SubResource("Sky_pw63i")
+ambient_light_source = 3
+
+[node name="MainScene" type="Node3D" unique_id=1975487761]
+
+[node name="Environment" type="Node" parent="." unique_id=365586086]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=1756613981]
+environment = SubResource("Environment_7ykc4")
+
+[node name="Player" parent="." unique_id=1717554717 instance=ExtResource("1_w2twt")]
+
+[node name="SceneGeom" type="Node3D" parent="." unique_id=1901460448]
+script = ExtResource("3_mirror")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="SceneGeom" unique_id=2047609766]
+transform = Transform3D(115.88, 0, 0, 0, 1, 0, 0, 0, 115, -1, -0.5, 2)
+use_collision = true
+
+[node name="Sketchfab_Scene" parent="SceneGeom" unique_id=157457568 instance=ExtResource("2_pw63i")]
